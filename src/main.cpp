@@ -11,12 +11,28 @@ struct Position {
     int y = 0;
 };
 
-void printField(Position playerPos)
+bool posMeet(Position playerPos, Position target){
+    if(playerPos.x == target.x && playerPos.y == target.y){
+        std:: cout << "wooooo";
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
+}
+
+
+void printField(Position playerPos, Position target)
 {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == playerPos.x && y == playerPos.y) {
                 std ::cout << "@ ";
+            }
+            else if (x == target.x && y == target.y) {
+                std ::cout << "T ";
             }
             else {
                 std::cout << field[y * SIZE + x] << " ";
@@ -72,13 +88,20 @@ int main()
 {
     field.fill('.');
     Position playerPos;
+    Position target;
     playerPos.x = std::rand() % SIZE;
     playerPos.y = std::rand() % SIZE;
+    target.x = std::rand() % SIZE;
+    target.y = std::rand() % SIZE;;
 
-    printField(playerPos);
+    printField(playerPos, target);
     while (true) {
         movement(playerPos);
-        printField(playerPos);
+        printField(playerPos, target);
+        bool won = posMeet(playerPos, target);
+        if (won) {
+            break;   
+        }
     }
 }
 
